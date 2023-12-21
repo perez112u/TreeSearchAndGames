@@ -1,11 +1,12 @@
 package ia.problemes;
 
 import ia.framework.common.State;
+import ia.framework.recherche.HasHeuristic;
 
 import java.io.IOException;
 import java.util.List;
 
-public class GpsState extends State{
+public class GpsState extends State implements HasHeuristic {
     private final List<Ville> graphe = Ville.des("src/ia/problemes/villes.txt");
     private String nomVille;
     private double lat;
@@ -55,5 +56,14 @@ public class GpsState extends State{
         return nomVille + '\'' +
                 ": [" + lat +
                 ", " + lon + "]";
+    }
+
+    @Override
+    public double getHeuristic(){
+        try {
+            return Gps.distance(this, new GpsState("Gaillard"));
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
