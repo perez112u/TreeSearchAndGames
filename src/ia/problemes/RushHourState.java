@@ -4,10 +4,11 @@ import ia.framework.common.Action;
 import ia.framework.common.Misc;
 import ia.framework.common.State;
 import ia.framework.jeux.GameState;
+import ia.framework.recherche.HasHeuristic;
 
 import java.util.*;
 
-public class RushHourState extends State {
+public class RushHourState extends State implements HasHeuristic {
 
     /**
      * attribut static représentant tous les etats possibles pour 1 case
@@ -302,5 +303,19 @@ public class RushHourState extends State {
 
     public boolean estArrivee() {
         return getValueAt(2, 5) == ROUGE;
+    }
+
+    // retourne le nombre de case non vide restante entre la voiture rouge est l'arrivée
+    @Override
+    public double getHeuristic() {
+        int indice = getIndicesCases(ROUGE)[1] + 1;
+        int res = 0;
+        while (indice <= 18) {  //case d arrivée
+            if (board[indice] != EMPTY) {
+                res++;
+            }
+            indice++;
+        }
+        return res;
     }
 }
