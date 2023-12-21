@@ -3,7 +3,9 @@ import ia.framework.common.State;
 import ia.framework.recherche.SearchProblem;
 import ia.framework.recherche.TreeSearch;
 
-import ia.problemes.*; 
+import ia.problemes.*;
+
+import java.io.IOException;
 
 /**
  * Lance un algorithme de recherche  
@@ -11,7 +13,7 @@ import ia.problemes.*;
  */
 public class LancerRecherche {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         // fixer le message d'aide
         ArgParse.setUsage
@@ -33,9 +35,12 @@ public class LancerRecherche {
         SearchProblem p = ArgParse.makeProblem(prob_name);
         State s = ArgParse.makeInitialState(prob_name);
         TreeSearch algo = ArgParse.makeAlgo(algo_name, p, s);
-        
+
+        long startTime = System.currentTimeMillis();
         // resoudre 
         if( algo.solve() )
             algo.printSolution();
+        long endTime = System.currentTimeMillis();
+        System.out.println("Temps de calcul : " + (endTime - startTime) + " ms");
     }
 }

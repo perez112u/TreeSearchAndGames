@@ -1,5 +1,7 @@
 package ia.framework.common;
 
+import java.io.IOException;
+
 /**
  * Un état générique une abstraction pour problème et jeux 
  */
@@ -11,7 +13,7 @@ public abstract class State implements Cloneable {
      * @return une copie de l'état
      */
     
-    protected  abstract State cloneState();
+    protected  abstract State cloneState() throws IOException, ClassNotFoundException;
 
     /** 
      * Vérifier l'égalité avec un autre état
@@ -30,7 +32,11 @@ public abstract class State implements Cloneable {
     
     @Override
     public State clone(){
-        return cloneState();
+        try {
+            return cloneState();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
     
     @Override

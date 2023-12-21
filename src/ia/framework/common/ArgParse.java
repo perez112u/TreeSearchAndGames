@@ -1,5 +1,6 @@
 package ia.framework.common;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -150,7 +151,7 @@ public class ArgParse {
      * @return Une instance du problème
      */
     
-    public static SearchProblem makeProblem(String prob){
+    public static SearchProblem makeProblem(String prob) throws IOException, ClassNotFoundException {
         if (prob==null)
             prob = "vac";
         switch (prob) {
@@ -162,6 +163,8 @@ public class ArgParse {
             return new Vacuum();
         case "puz":
             return new EightPuzzle();
+        case "gps":
+            return new Gps();
         case "rus":
             System.out.println("Entrez une difficulté : (1-4) :");
             Scanner sc = new Scanner(System.in);
@@ -270,7 +273,7 @@ public class ArgParse {
      * @return  L'état initial qui peut être fixé ou généré aléatoirement
      * 
      */
-    public static State makeInitialState(String prob){
+    public static State makeInitialState(String prob) throws IOException, ClassNotFoundException {
         if (prob==null)
             prob = "vac";
         switch (prob) {
@@ -284,6 +287,8 @@ public class ArgParse {
             return new EightPuzzleState();
         case "rus":
             return new RushHourState(difficulte);
+        case "gps":
+            return new GpsState("Pia");
             default:
                 return null;
         }
